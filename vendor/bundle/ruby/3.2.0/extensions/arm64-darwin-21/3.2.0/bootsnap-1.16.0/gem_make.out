@@ -1,0 +1,18 @@
+current directory: /Users/tanamaru/nanitabe_app/vendor/bundle/ruby/3.2.0/gems/bootsnap-1.16.0/ext/bootsnap
+/Users/tanamaru/.rbenv/versions/3.2.2/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /Users/tanamaru/nanitabe_app/vendor/bundle/ruby/3.2.0/gems/bootsnap-1.16.0/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20230529-77086-4mjp5h sitelibdir\=./.gem.20230529-77086-4mjp5h clean
+
+current directory: /Users/tanamaru/nanitabe_app/vendor/bundle/ruby/3.2.0/gems/bootsnap-1.16.0/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20230529-77086-4mjp5h sitelibdir\=./.gem.20230529-77086-4mjp5h
+compiling bootsnap.c
+linking shared-object bootsnap/bootsnap.bundle
+
+current directory: /Users/tanamaru/nanitabe_app/vendor/bundle/ruby/3.2.0/gems/bootsnap-1.16.0/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20230529-77086-4mjp5h sitelibdir\=./.gem.20230529-77086-4mjp5h install
+/usr/bin/install -c -m 0755 bootsnap.bundle ./.gem.20230529-77086-4mjp5h/bootsnap
+
+current directory: /Users/tanamaru/nanitabe_app/vendor/bundle/ruby/3.2.0/gems/bootsnap-1.16.0/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20230529-77086-4mjp5h sitelibdir\=./.gem.20230529-77086-4mjp5h clean
