@@ -1,6 +1,10 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
+  daisyui: {
+    darkTheme: false,
+    themes: ["light", "dark", "cupcake"],
+  },
   content: [
     './public/*.html',
     './app/helpers/**/*.rb',
@@ -20,5 +24,5 @@ module.exports = {
     require('@tailwindcss/typography'),
     require('@tailwindcss/container-queries'),
     require('daisyui')
-  ]
+  ],
 }
