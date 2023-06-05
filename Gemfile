@@ -55,6 +55,7 @@ gem 'annotate'
 gem 'rails-i18n'
 gem 'geocoder'
 gem 'dotenv-rails'
+gem 'jquery-rails'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
