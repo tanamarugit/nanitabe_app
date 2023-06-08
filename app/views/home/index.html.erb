@@ -1,1 +1,50 @@
 <h1>トップページ</h1>
+<button id="find-me" onclick="location.href='/maps'" class="btn btn-success">探す！</button>
+<script>
+function geoFindMe() {
+
+  const status = document.querySelector('#status');
+  const mapLink = document.querySelector('#map-link');
+
+  function success(position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+
+    status.textContent = '';
+    mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
+
+    // Googleマップを表示するための設定を行います
+    var mapOptions = {
+      center: { lat: latitude, lng: longitude },
+      zoom: 16
+    };
+
+    // Googleマップを作成します
+    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+    // ピンを立てるためのマーカーを作成します
+    var marker = new google.maps.Marker({
+      position: { lat: latitude, lng: longitude },
+      map: map,
+      title: "現在地"
+    });
+  }
+
+  function error() {
+    status.textContent = 'Unable to retrieve your location';
+  }
+
+  if (!navigator.geolocation) {
+    status.textContent = 'Geolocation is not supported by your browser';
+  } else {
+    status.textContent = 'Locating…';
+    navigator.geolocation.getCurrentPosition(success, error);
+  }
+
+  window.onload = function() {
+    geoFindMe();
+};
+}
+
+document.querySelector('#find-me').addEventListener('click', geoFindMe);
+</script>
