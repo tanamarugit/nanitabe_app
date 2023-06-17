@@ -1,11 +1,29 @@
 class MapsController < ApplicationController
-  def index
+  def search
     @maps = Map.all
     @map = Map.new
     require 'geocoder'
     require 'net/http'
     require 'json'
-    uri = URI.parse("http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=49d0fceee63728bd&lat=35.779744&lng=140.001097&range=1&format=json&count=2")
+    require 'uri'
+
+    latitude = params[:latitude]
+    longitude = params[:longitude]
+
+    base_url = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/"
+    params = {
+      'key' => '49d0fceee63728bd',
+      'lat' => "#{latitude}",
+      'lng' => "#{longitude}",
+      'range' => 1,
+      'count' => 5,
+      'format' => 'json'
+    }
+    
+    uri = URI.parse(base_url)
+    uri.query = URI.encode_www_form(params)
+    
+    
     response = Net::HTTP.get_response(uri)
     if response.code == '301'
       # リダイレクト先のURLを取得
@@ -14,11 +32,9 @@ class MapsController < ApplicationController
       # 新しいURLにリクエストを送信
       new_uri = URI.parse(new_location)
       new_response = Net::HTTP.get_response(new_uri)
-      
       if new_response.code == '200'
         # レスポンスを解析
         result = JSON.parse(new_response.body)
-        
         # 結果を利用する処理を追加
       else
         # リクエストが成功しなかった場合の処理
@@ -28,8 +44,16 @@ class MapsController < ApplicationController
       # 301以外のステータスコードの処理
       # ...
     end
-    @shop_name = result['results']['shop'][0]['name']
+
+    # @shop_name = result['results']['shop'].map { |shop| shop['name'] }
+
   end
+
+  def get_nearby_shops
+    
+  end
+  
+
 
   def create
     map = Map.new(map_params)
@@ -46,9 +70,7 @@ class MapsController < ApplicationController
     redirect_to action: 'index'
   end
 
-  def search
 
-  end
 
   private
 
