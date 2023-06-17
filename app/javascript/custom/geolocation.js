@@ -14,11 +14,12 @@ function initMap(){
 
 document.addEventListener('DOMContentLoaded', function() {
   geoFindMe()
-});
-function geoFindMe() {
+  function geoFindMe() {
 
   const status = document.querySelector('#status');
   const mapLink = document.querySelector('#map-link');
+
+  
 
   function success(position) {
     const latitude = position.coords.latitude;
@@ -26,6 +27,19 @@ function geoFindMe() {
 
     status.textContent = '';
     mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
+
+    // Ajaxリクエストを送信します
+    fetch('/maps', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        latitude: latitude,
+        longitude: longitude,
+        authenticity_token: document.querySelector("meta[name='csrf-token']").getAttribute("content")
+      })
+    })
 
     // Googleマップを表示するための設定を行います
     var mapOptions = {
@@ -42,22 +56,6 @@ function geoFindMe() {
       map: map,
       title: "現在地"
     });
-
-    var xhr = new XMLHttpRequest();
-    var url = "/maps?latitude=" + latitude + "&longitude=" + longitude;
-    xhr.open("GET", url, true);
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        var response = JSON.parse(xhr.responseText);
-        // 必要な処理を実行する
-        var shopNames = response.results.shop.map(function(shop) {
-          return shop.name;
-        });
-        console.log(shopNames);
-      }
-    };
-    xhr.send();
-
   }
   function error() {
     status.textContent = 'Unable to retrieve your location';
@@ -70,3 +68,5 @@ function geoFindMe() {
     navigator.geolocation.getCurrentPosition(success, error);
   }
 }
+});
+
