@@ -37,3 +37,29 @@
     end
 
     @shop_name = result['results']['shop'].map { |shop| shop['name'] }
+
+    // Ajaxリクエストを送信します
+    // fetch('/maps', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({
+    //     latitude: latitude,
+    //     longitude: longitude,
+    //     authenticity_token: document.querySelector("meta[name='csrf-token']").getAttribute("content")
+    //   })
+    // })
+
+     // Ajaxリクエストを送信します
+    // fetch('/maps/index', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({
+    //     latitude: latitude,
+    //     longitude: longitude,
+    //     authenticity_token: document.querySelector("meta[name='csrf-token']").getAttribute("content")
+    //   })
+    // })

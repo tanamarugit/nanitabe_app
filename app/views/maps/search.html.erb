@@ -1,29 +1,17 @@
 <h2>gmap</h2>
-<%# <input id="address" type="textbox" value="GeekSalon">
-<input type="button" value="検索" onclick="codeAddress()"> %>
 
 <div id="display">緯度経度を表示</div>
-<button id = "find-me">現在地を取得して地図上に表示</button><br/>
+<button id="find-me">現在地を取得して地図上に表示</button><br/>
 
+<p id="status"></p>
+<a id="map-link" target="_blank"></a>
 
-<p id = "status"></p>
-<a id = "map-link" target="_blank"></a>
-
-<div id='map'></div>
-
-
-
-<style>
-#map {
-  height: 600px;
-  width: 600px;
-}
-</style>
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap" async defer></script>
-
+<div id="map" style="height: 600px; width: 600px;"></div>
 
 <h1>飲食店検索結果</h1>
+<ul id="shop-list"></ul>
 
-<%# <% @shop_name.each do |shop| %>
-  <%# <li><%= shop %></li> %>
-<%# <% end %> %> %>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap" async defer></script>
+<script>
+  window.apiKey = '<%= ENV["HOTPEPPER_API_KEY"] %>';
+</script>
