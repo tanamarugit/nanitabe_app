@@ -1,9 +1,12 @@
+<% content_for :js do %>
+  <%= javascript_import_module_tag "custom/geolocation" %>
+<% end %>
 <h2>gmap</h2>
 
 <div id="display">緯度経度を表示</div>
 <button id="find-me">現在地を取得して地図上に表示</button><br/>
 
-<p id="status"></p>
+<div id="status"></div>
 <a id="map-link" target="_blank"></a>
 
 <div id="map" style="height: 600px; width: 600px;"></div>
@@ -11,7 +14,7 @@
 <h1>飲食店検索結果</h1>
 <ul id="shop-list"></ul>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY']%>&callback=initMap " async defer></script>
 <script>
   window.apiKey = '<%= ENV["HOTPEPPER_API_KEY"] %>';
 </script>

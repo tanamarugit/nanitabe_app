@@ -11,9 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
     
     const apiKey = window.apiKey;
-    const url = `http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=${apiKey}&lng=${longitude}&lat=${latitude}&range=1&format=json&count=10`;
-    
-
+    const url = `http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=${apiKey}&lng=${longitude}&lat=${latitude}&range=5&format=json&count=10`;
     
     fetch(url)
       .then(response => response.json())
@@ -24,7 +22,12 @@ document.addEventListener('DOMContentLoaded', function() {
           let shopHTML = '';
           shops.forEach(shop => {
             const shopName = shop.name;
+            const shopAddress = shop.address;
+            const shopLogoimage = shop.logo_image;
             shopHTML += `<li>${shopName}</li>`;
+            shopHTML += `<li>${shopAddress}</li>`;
+            shopHTML += `<li>${shopLogoimage}</li>`;
+            shopHTML += `<li><image src =${shopLogoimage} ></li>`;
           });
           shopList.innerHTML = shopHTML;
         } else {
@@ -35,29 +38,43 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Error:', error);
       });
   
+      
+      var mapOptions = {
+        center: { lat: latitude, lng: longitude },
+        zoom: 16
+      };
+  
+      var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+  
+      var marker = new google.maps.Marker({
+        position: { lat: latitude, lng: longitude },
+        map: map,
+        title: '現在地'
+      });
+      
+    }
+  
+    function error() {
+      status.textContent = 'Unable to retrieve your location';
+    }
+  
+    if (!navigator.geolocation) {
+      status.textContent = 'Geolocation is not supported by your browser';
+    } else {
+      status.textContent = 'Locating…';
+      navigator.geolocation.getCurrentPosition(success, error);
+    }
+    let map;
 
-    var mapOptions = {
-      center: { lat: latitude, lng: longitude },
-      zoom: 16
-    };
-
-    var map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
-    var marker = new google.maps.Marker({
-      position: { lat: latitude, lng: longitude },
-      map: map,
-      title: '現在地'
-    });
-  }
-
-  function error() {
-    status.textContent = 'Unable to retrieve your location';
-  }
-
-  if (!navigator.geolocation) {
-    status.textContent = 'Geolocation is not supported by your browser';
-  } else {
-    status.textContent = 'Locating…';
-    navigator.geolocation.getCurrentPosition(success, error);
-  }
+    async function initMap() {
+      //@ts-ignore
+      const { Map } = await google.maps.importLibrary("maps");
+    
+      map = new Map(document.getElementById("map"), {
+        center: { lat: -34.397, lng: 150.644 },
+        zoom: 8,
+      });
+    }
+    
+    initMap();
 });
