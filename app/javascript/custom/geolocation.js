@@ -24,14 +24,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const shopName = shop.name;
             const shopAddress = shop.address;
             const shopLogoimage = shop.logo_image;
-            shopHTML += `<li>${shopName}</li>`;
+            const shopUrl = shop.urls.pc;
+            shopHTML += `<li><a href="${shopUrl}">${shopName}</a></li>`;
             shopHTML += `<li>${shopAddress}</li>`;
-            shopHTML += `<li>${shopLogoimage}</li>`;
             shopHTML += `<li><image src =${shopLogoimage} ></li>`;
           });
           shopList.innerHTML = shopHTML;
         } else {
           console.error('Invalid data format:', data);
+          status.shopList = '近くに飲食店が見つかりませんでした。';
         }
       })
       .catch(error => {
