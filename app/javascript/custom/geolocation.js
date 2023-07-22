@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const shopList = document.querySelector('#shop-list');
 
   function success(position) {
+    
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
     status.textContent = '';
@@ -12,27 +13,34 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const apiKey = window.apiKey;
     const url = `http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=${apiKey}&lng=${longitude}&lat=${latitude}&range=5&format=json&count=10`;
-    
+    // const url = `http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=${apiKey}&lng=145.552090&lat=35.286197&range=5&format=json&count=10`;
+
+
     fetch(url)
       .then(response => response.json())
       .then(data => {
-        console.log(data); // レスポンスの内容をコンソールに表示
         if (data.results && data.results.shop && Array.isArray(data.results.shop)) {
           const shops = data.results.shop;
-          let shopHTML = '';
-          shops.forEach(shop => {
-            const shopName = shop.name;
-            const shopAddress = shop.address;
-            const shopLogoimage = shop.logo_image;
-            const shopUrl = shop.urls.pc;
-            shopHTML += `<li><a href="${shopUrl}">${shopName}</a></li>`;
-            shopHTML += `<li>${shopAddress}</li>`;
-            shopHTML += `<li><image src =${shopLogoimage} ></li>`;
-          });
-          shopList.innerHTML = shopHTML;
+          if (parseInt(data.results.results_available) === 0) {
+            let shopHTML = '近くに飲食店が見つかりませんでした';
+            shopList.innerHTML = shopHTML;
+          } else {
+            let shopHTML = '';
+            shops.forEach(shop => {
+              const shopName = shop.name;
+              const shopAddress = shop.address;
+              const shopLogoimage = shop.logo_image;
+              const shopUrl = shop.urls.pc;
+              const shopGenre = shop.genre.name
+              shopHTML += `<li>ジャンル${shopGenre}</li>`;
+              shopHTML += `<li><a href="${shopUrl}">${shopName}</a></li>`;
+              shopHTML += `<li>アクセス${shopAddress}</li>`;
+              shopHTML += `<li><image src =${shopLogoimage} ></li>`;
+            });
+            shopList.innerHTML = shopHTML; 
+          }
         } else {
           console.error('Invalid data format:', data);
-          status.shopList = '近くに飲食店が見つかりませんでした。';
         }
       })
       .catch(error => {
@@ -54,17 +62,17 @@ document.addEventListener('DOMContentLoaded', function() {
       });
       
     }
-  
-    function error() {
-      status.textContent = 'Unable to retrieve your location';
-    }
-  
     if (!navigator.geolocation) {
       status.textContent = 'Geolocation is not supported by your browser';
     } else {
       status.textContent = 'Locating…';
       navigator.geolocation.getCurrentPosition(success, error);
     }
+    function error() {
+      status.textContent = 'Unable to retrieve your location';
+    }
+  
+    
     let map;
 
     async function initMap() {
