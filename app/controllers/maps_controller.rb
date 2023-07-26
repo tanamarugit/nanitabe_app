@@ -78,7 +78,20 @@ class MapsController < ApplicationController
 
   end
   
-    # json_data = JSON.parse(params.require(:json_data)) # 受け取ったJSONデータをパースしてオブジェクトに変換する
+  def random
+    # Ajaxリクエストで送信されたデータを取得
+    data = params[:result]
+  
+    if data.present?
+      json_data = data.to_json
+      result = JSON.parse(json_data, {symbolize_names: true})
+      shops = result[:results][:shop]
+      @shop_name = shops&.first&.dig(:name)
+    else
+      @shop_name = "データがありません"
+    end
+  end
+  
 
   private
 

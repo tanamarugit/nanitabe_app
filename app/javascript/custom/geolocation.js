@@ -12,9 +12,8 @@ document.addEventListener('DOMContentLoaded', function() {
     mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
     
     const apiKey = window.apiKey;
-    const url = `http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=${apiKey}&lng=${longitude}&lat=${latitude}&range=5&format=json&count=10`;
+    const url = `http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=${apiKey}&lng=${longitude}&lat=${latitude}&range=5&format=json&count=1`;
     // const url = `http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=${apiKey}&lng=145.552090&lat=35.286197&range=5&format=json&count=10`;
-
 
     fetch(url)
       .then(response => response.json())
@@ -37,7 +36,36 @@ document.addEventListener('DOMContentLoaded', function() {
               shopHTML += `<li>アクセス${shopAddress}</li>`;
               shopHTML += `<li><image src =${shopLogoimage} ></li>`;
             });
-            shopList.innerHTML = shopHTML; 
+            shopList.innerHTML = shopHTML;
+            const result = data;
+            sendResultToRandomAction(result);
+          }
+          function sendResultToRandomAction(result) {
+            const url = '/maps/random'; // mapsコントローラーのURLを適切に指定
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+          
+            fetch(url, {
+              method: 'POST', // POSTリクエストを送信
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': csrfToken // CSRFトークンを含める（必要に応じて）
+              },
+              body: JSON.stringify({ result }) // resultをJSON形式の文字列に変換して送信
+            })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              // レスポンスのHTMLを取得
+              return response.text();
+              
+            })
+            .then(html => {
+              document.getElementById("result-container").innerHTML = html;
+            })
+            .catch(error => {
+              console.error('Error:', error);
+            });
           }
         } else {
           console.error('Invalid data format:', data);
@@ -46,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
       .catch(error => {
         console.error('Error:', error);
       });
+      
   
       
       var mapOptions = {
@@ -78,12 +107,14 @@ document.addEventListener('DOMContentLoaded', function() {
     async function initMap() {
       //@ts-ignore
       const { Map } = await google.maps.importLibrary("maps");
-    
+  
+      const latitude = -34.397;
+      const longitude = 150.644;
+      
       map = new Map(document.getElementById("map"), {
-        center: { lat: -34.397, lng: 150.644 },
+        center: { lat: latitude, lng: longitude },
         zoom: 8,
       });
     }
-    
-    initMap();
 });
+
