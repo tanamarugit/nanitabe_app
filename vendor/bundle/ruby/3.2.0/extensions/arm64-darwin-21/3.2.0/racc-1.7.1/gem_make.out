@@ -1,0 +1,20 @@
+current directory: /Users/tanamaru/nanitabe_app/vendor/bundle/ruby/3.2.0/gems/racc-1.7.1/ext/racc/cparse
+/Users/tanamaru/.rbenv/versions/3.2.2/bin/ruby extconf.rb
+checking for rb_block_call()... yes
+checking for rb_ary_subseq()... yes
+creating Makefile
+
+current directory: /Users/tanamaru/nanitabe_app/vendor/bundle/ruby/3.2.0/gems/racc-1.7.1/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20230726-45916-baktkg sitelibdir\=./.gem.20230726-45916-baktkg clean
+
+current directory: /Users/tanamaru/nanitabe_app/vendor/bundle/ruby/3.2.0/gems/racc-1.7.1/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20230726-45916-baktkg sitelibdir\=./.gem.20230726-45916-baktkg
+compiling cparse.c
+linking shared-object racc/cparse.bundle
+
+current directory: /Users/tanamaru/nanitabe_app/vendor/bundle/ruby/3.2.0/gems/racc-1.7.1/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20230726-45916-baktkg sitelibdir\=./.gem.20230726-45916-baktkg install
+/usr/bin/install -c -m 0755 cparse.bundle ./.gem.20230726-45916-baktkg/racc
+
+current directory: /Users/tanamaru/nanitabe_app/vendor/bundle/ruby/3.2.0/gems/racc-1.7.1/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20230726-45916-baktkg sitelibdir\=./.gem.20230726-45916-baktkg clean

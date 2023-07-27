@@ -86,11 +86,13 @@ class MapsController < ApplicationController
       json_data = data.to_json
       result = JSON.parse(json_data, {symbolize_names: true})
       shops = result[:results][:shop]
-      @shop_name = shops&.first&.dig(:name)
+      random_shop = shops.sample
+      @shop_name = random_shop[:name]
+      @shop_logo = random_shop[:logo_image]
     else
       @shop_name = "データがありません"
     end
-  end
+end
   
 
   private
